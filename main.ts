@@ -11,7 +11,7 @@ namespace Tinybit {
     const PWM_ADD = 0x01
     const MOTOR = 0x02
     const RGB = 0x01
-    
+
     let yahStrip: neopixel.Strip;
 
     export enum enColor {
@@ -36,27 +36,47 @@ namespace Tinybit {
     }
     export enum enMusic {
 
+        //% blockId="dadadum" block="dadadum"
         dadadum = 0,
+        //% blockId="entertainer" block="entertainer"
         entertainer,
+        //% blockId="prelude" block="prelude"
         prelude,
+        //% blockId="ode" block="ode"
         ode,
+        //% blockId="nyan" block="nyan"
         nyan,
+        //% blockId="ringtone" block="ringtone"
         ringtone,
+        //% blockId="funk" block="funk"
         funk,
+        //% blockId="blues" block="blues"
         blues,
-
+        //% blockId="birthday" block="birthday"
         birthday,
+        //% blockId="wedding" block="wedding"
         wedding,
+        //% blockId="funereal" block="funereal"
         funereal,
+        //% blockId="punchline" block="punchline"
         punchline,
+        //% blockId="baddy" block="baddy"
         baddy,
+        //% blockId="chase" block="chase"
         chase,
+        //% blockId="ba_ding" block="ba_ding"
         ba_ding,
+        //% blockId="wawawawaa" block="wawawawaa"
         wawawawaa,
+        //% blockId="jump_up" block="jump_up"
         jump_up,
+        //% blockId="jump_down" block="jump_down"
         jump_down,
+        //% blockId="power_up" block="power_up"
         power_up,
+        //% blockId="power_down" block="power_down"
         power_down
+
     }
     export enum enPos {
 
@@ -72,21 +92,8 @@ namespace Tinybit {
         //% blockId="Black" block="Black Line"
         Black = 1
     }
-    
-    export enum enTouchState {
-        //% blockId="Get" block="Get"
-        Get = 0,
-        //% blockId="NoGet" block="NoGet"
-        NoGet = 1
-    }    
-    export enum enAvoidState {
-        //% blockId="OBSTACLE" block="Obstacle"
-        OBSTACLE = 1,
-        //% blockId="NOOBSTACLE" block="No Obstacle"
-        NOOBSTACLE = 0
 
-    }
-    
+
     export enum CarState {
         //% blockId="Car_Run" block="Run"
         Car_Run = 1,
@@ -111,17 +118,17 @@ namespace Tinybit {
         buf[1] = red;
         buf[2] = green;
         buf[3] = blue;
-        
+
         pins.i2cWriteBuffer(PWM_ADD, buf);
     }
 
     function setPwmMotor(mode: number, speed1: number, speed2: number): void {
         if (mode < 0 || mode > 6)
             return;
-        
+
         let buf = pins.createBuffer(5);
         buf[0] = MOTOR;
-        switch (mode) { 
+        switch (mode) {
             case 0: buf[1] = 0; buf[2] = 0; buf[3] = 0; buf[4] = 0; break;              //stop
             case 1: buf[1] = speed1; buf[2] = 0; buf[3] = speed2; buf[4] = 0; break;    //run
             case 2: buf[1] = 0; buf[2] = speed1; buf[3] = 0; buf[4] = speed2; break;    //back
@@ -155,14 +162,14 @@ namespace Tinybit {
     }
 
     function Car_stop() {
-       
+
         setPwmMotor(0, 0, 0);
     }
 
     function Car_spinleft(speed1: number, speed2: number) {
 
         setPwmMotor(5, speed1, speed2);
-    } 
+    }
 
     function Car_spinright(speed1: number, speed2: number) {
 
@@ -172,7 +179,7 @@ namespace Tinybit {
     /**
      * *****************************************************************
      * @param index
-     */   
+     */
 
     //% blockId=Tinybit_RGB_Car_Program block="RGB_Car_Program"
     //% weight=99
@@ -180,12 +187,12 @@ namespace Tinybit {
     //% color="#006400"
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
     export function RGB_Car_Program(): neopixel.Strip {
-         
+
         if (!yahStrip) {
             yahStrip = neopixel.create(DigitalPin.P12, 2, NeoPixelMode.RGB);
         }
-        return yahStrip;  
-    }  
+        return yahStrip;
+    }
 
     //% blockId=Tinybit_RGB_Car_Big block="RGB_Car_Big|value %value"
     //% weight=98
@@ -267,9 +274,9 @@ namespace Tinybit {
             case enMusic.power_down: music.beginMelody(music.builtInMelody(Melodies.PowerDown), MelodyOptions.Once); break;
         }
     }
-    
-    
-    
+
+
+
     //% blockId=Tinybit_CarCtrl block="CarCtrl|%index"
     //% weight=93
     //% blockGap=10
@@ -286,7 +293,7 @@ namespace Tinybit {
             case CarState.Car_SpinRight: Car_spinright(255, 255); break;
         }
     }
-    
+
     //% blockId=Tinybit_CarCtrlSpeed block="CarCtrlSpeed|%index|speed %speed"
     //% weight=92
     //% blockGap=10
@@ -304,7 +311,7 @@ namespace Tinybit {
             case CarState.Car_SpinRight: Car_spinright(speed, speed); break;
         }
     }
-    
+
     //% blockId=Tinybit_CarCtrlSpeed2 block="CarCtrlSpeed2|%index|speed1 %speed1|speed2 %speed2"
     //% weight=91
     //% blockGap=10
@@ -321,10 +328,10 @@ namespace Tinybit {
             case CarState.Car_SpinLeft: Car_spinleft(speed1, speed2); break;
             case CarState.Car_SpinRight: Car_spinright(speed1, speed2); break;
         }
-    }    
-        
-   
-    
+    }
+
+
+
     //% blockId=Tinybit_Line_Sensor block="Line_Sensor|direct %direct|value %value"
     //% weight=89
     //% blockGap=10
@@ -337,18 +344,18 @@ namespace Tinybit {
         pins.setPull(DigitalPin.P14, PinPullMode.PullNone);
         switch (direct) {
             case enPos.LeftState: {
-                if (pins.digitalReadPin(DigitalPin.P13) == value) {              
-                    temp = true;                  
+                if (pins.digitalReadPin(DigitalPin.P13) == value) {
+                    temp = true;
                 }
-                else {                  
+                else {
                      temp = false;
                 }
                 break;
             }
 
             case enPos.RightState: {
-                if (pins.digitalReadPin(DigitalPin.P14) == value) {              
-                    temp = true;                  
+                if (pins.digitalReadPin(DigitalPin.P14) == value) {
+                    temp = true;
                 }
                 else {
                     temp = false;
@@ -366,13 +373,13 @@ namespace Tinybit {
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=12
     export function Voice_Sensor(): number {
 	    //pins.setPull(DigitalPin.P1, PinPullMode.PullUp);
-        let temp  = 0;		
-        temp = pins.analogReadPin(AnalogPin.P1);           
-            
+        let temp  = 0;
+        temp = pins.analogReadPin(AnalogPin.P1);
+
         return temp;
 
     }
-        
+
     //% blockId=Tinybit_Ultrasonic_Car block="ultrasonic return distance(cm)"
     //% color="#006400"
     //% weight=87
@@ -380,21 +387,21 @@ namespace Tinybit {
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
     export function Ultrasonic_Car(): number {
 
-       let list:Array<number> = [0, 0, 0, 0, 0];
-	for (let i = 0; i < 5; i++)
-	{
-		pins.setPull(DigitalPin.P16, PinPullMode.PullNone);
-		pins.digitalWritePin(DigitalPin.P16, 0);
-		control.waitMicros(2);
-		pins.digitalWritePin(DigitalPin.P16, 1);
-		control.waitMicros(15);
-		pins.digitalWritePin(DigitalPin.P16, 0);
-		let d = pins.pulseIn(DigitalPin.P15, PulseValue.High, 43200);
-		list[i] = Math.floor(d / 40);
-	}
-	list.sort();
-	let length = (list[1] + list[2] + list[3])/3;
-	return  Math.floor(length);
+       	let list:Array<number> = [0, 0, 0, 0, 0];
+				for (let i = 0; i < 5; i++)
+				{
+					pins.setPull(DigitalPin.P16, PinPullMode.PullNone);
+					pins.digitalWritePin(DigitalPin.P16, 0);
+					control.waitMicros(2);
+					pins.digitalWritePin(DigitalPin.P16, 1);
+					control.waitMicros(15);
+					pins.digitalWritePin(DigitalPin.P16, 0);
+					let d = pins.pulseIn(DigitalPin.P15, PulseValue.High, 43200);
+					list[i] = Math.floor(d / 40);
+				}
+				list.sort();
+				let length = (list[1] + list[2] + list[3])/3;
+				return  Math.floor(length);
     }
 
 

@@ -1,22 +1,21 @@
 {
     "name": "Tinybit",
-    "version": "1.0.1",
-    "description": "Extension for YahBoom Tiny:bit V1.0.1",
+    "version": "2.0.2",
+    "description": "Extension for YahBoom Tiny:bit V2.0.2",
     "license": "MIT",
     "dependencies": {
         "core": "*",
-        "neopixel": "github:ytk-hida/pxt-neopixel",
-        "Mbit_IR":  "github:ytk-hida/yahboom_mbit_IR"
+        "neopixel": "github:ytk-hida/pxt-neopixel"
 
 
     },
     "files": [
         "README.md",
         "main.ts",
-        "_locales/ja/Tinybit-strings.json",
         "_locales/zh-cn/Tinybit-strings.json",
-        "_locales/zh-tw/Tinybit-strings.json"
-
+        "_locales/zh-tw/Tinybit-strings.json",
+        "_locales/fr/Tinybit-strings.json",
+        "_locales/ja/Tinybit-strings.json"
     ],
     "testFiles": [
         "test.ts"
